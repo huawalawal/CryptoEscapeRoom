@@ -66,3 +66,14 @@
                 (ok true))
             (ok false))))
 
+;; Get current puzzle
+(define-read-only (get-current-puzzle)
+    (map-get? puzzles (var-get current-puzzle)))
+
+;; Get player progress
+(define-read-only (get-player-progress (player principal))
+    (default-to u0 (map-get? player-progress player)))
+
+;; Get prize pool
+(define-read-only (get-prize-pool)
+    (var-get prize-pool))
