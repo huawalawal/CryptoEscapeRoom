@@ -35,3 +35,12 @@
         (var-set current-puzzle u1)
         (var-set game-start-time block-height)
         (ok true)))
+
+;; Start game
+(define-public (start-game)
+    (begin
+        (asserts! (>= (stx-get-balance tx-sender) entry-fee) err-insufficient-balance)
+        (try! (stx-transfer? entry-fee tx-sender (as-contract tx-sender)))
+        (var-set prize-pool (+ (var-get prize-pool) entry-fee))
+        (map-set player-progress tx-sender u1)
+        (ok true)))
