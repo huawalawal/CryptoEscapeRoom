@@ -54,3 +54,15 @@
         (if (is-eq (+ current-level u1) u4)
             (finish-game)
             (ok true))))
+
+;; Finish game
+(define-private (finish-game)
+    (let ((game-time (- block-height (var-get game-start-time))))
+        (if (<= game-time game-duration)
+            (begin
+                (try! (as-contract (stx-transfer? (var-get prize-pool) tx-sender tx-sender)))
+                (try! (ft-mint? escape-token u1000 tx-sender))
+                (var-set prize-pool u0)
+                (ok true))
+            (ok false))))
+
