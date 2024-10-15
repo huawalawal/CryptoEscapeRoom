@@ -44,3 +44,13 @@
         (var-set prize-pool (+ (var-get prize-pool) entry-fee))
         (map-set player-progress tx-sender u1)
         (ok true)))
+
+;; Solve puzzle
+(define-public (solve-puzzle (solution (string-ascii 256)))
+    (let ((current-level (default-to u0 (map-get? player-progress tx-sender))))
+        (asserts! (> (var-get game-start-time) u0) err-game-not-started)
+        (asserts! (is-eq (map-get? puzzles current-level) solution) err-incorrect-solution)
+        (map-set player-progress tx-sender (+ current-level u1))
+        (if (is-eq (+ current-level u1) u4)
+            (finish-game)
+            (ok true))))
