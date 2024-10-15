@@ -23,3 +23,6 @@
 (define-constant err-insufficient-balance (err u102))
 (define-constant err-incorrect-solution (err u103))
 (define-constant err-game-not-started (err u104))
+
+
+
