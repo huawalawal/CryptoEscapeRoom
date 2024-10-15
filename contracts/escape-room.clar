@@ -24,5 +24,14 @@
 (define-constant err-incorrect-solution (err u103))
 (define-constant err-game-not-started (err u104))
 
-
-
+;; Initialize game
+(define-public (initialize-game (puzzle-1 (string-ascii 256)) (puzzle-2 (string-ascii 256)) (puzzle-3 (string-ascii 256)))
+    (begin
+        (asserts! (is-eq tx-sender contract-owner) err-not-owner)
+        (asserts! (is-eq (var-get game-start-time) u0) err-game-in-progress)
+        (map-set puzzles u1 puzzle-1)
+        (map-set puzzles u2 puzzle-2)
+        (map-set puzzles u3 puzzle-3)
+        (var-set current-puzzle u1)
+        (var-set game-start-time block-height)
+        (ok true)))
